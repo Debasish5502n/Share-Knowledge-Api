@@ -38,10 +38,10 @@ app.use(errorHandling);
 
 //Create table before starting server
 createUserTable();
-//createCourseTable();
-//createSubjectTable();
-//createSubjectTopicTable();
-//createLessonsTable();
+createCourseTable();
+createSubjectTable();
+createSubjectTopicTable();
+createLessonsTable();
 
 // Testing POSTGRES Connection
 app.get("/", async (req, res) => {
