@@ -6,7 +6,7 @@ export const createCourseService = async (user_id, course_category, course_title
     INSERT INTO course (user_id, course_category, course_title, course_description, course_image, course_thumbnail)
     VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;
   `;
-  const values = [user_id, course_title, course_description, course_image, course_thumbnail];
+  const values = [user_id, course_category, course_title, course_description, course_image, course_thumbnail];
   const { rows } = await pool.query(queryText, values);
   return rows[0];
 };

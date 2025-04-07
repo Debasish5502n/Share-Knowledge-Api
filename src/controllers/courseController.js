@@ -17,9 +17,9 @@ const handleResponse = (res, status, message, data = null) => {
 };
 
 export const createCourse = async (req, res, next) => {
-  const { user_id, course_title, course_description, course_image, course_thumbnail } = req.body;
+  const { user_id, course_category, course_title, course_description, course_image, course_thumbnail } = req.body;
   try {
-    const newCourse = await createCourseService(user_id, course_title, course_description, course_image, course_thumbnail);
+    const newCourse = await createCourseService(user_id, course_category, course_title, course_description, course_image, course_thumbnail);
     handleResponse(res, 201, "Course created successfully", newCourse);
   } catch (err) {
     next(err);
