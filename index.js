@@ -14,6 +14,7 @@ import createCourseTable from "./src/data/createCourseTable.js";
 import createSubjectTable from "./src/data/createSubjectsTable.js";
 import createSubjectTopicTable from "./src/data/createSubjectsTopicTable.js";
 import createLessonsTable from "./src/data/createLessonsTable.js";
+import dropTable from "./src/data/dropTable.js";
 
 dotenv.config();
 
@@ -37,11 +38,13 @@ app.use("/api", lessonRoutes);
 app.use(errorHandling);
 
 //Create table before starting server
-createUserTable();
-createCourseTable();
-createSubjectTable();
-createSubjectTopicTable();
-createLessonsTable();
+// createUserTable();
+// createCourseTable();
+// createSubjectTable();
+// createSubjectTopicTable();
+// createLessonsTable();
+
+//dropTable();
 
 // Testing POSTGRES Connection
 app.get("/", async (req, res) => {

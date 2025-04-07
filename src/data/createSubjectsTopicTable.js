@@ -5,7 +5,7 @@ const createSubjectsTopicTable = async () => {
     CREATE TABLE IF NOT EXISTS subjects_topic (
       subjects_topic_id SERIAL PRIMARY KEY,
       subject_id INT NOT NULL,
-      title VARCHAR(100) UNIQUE NOT NULL,
+      title VARCHAR(100) NOT NULL,
       created_at BIGINT DEFAULT (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT,
       FOREIGN KEY (subject_id) REFERENCES subjects(subject_id) ON DELETE CASCADE
     );

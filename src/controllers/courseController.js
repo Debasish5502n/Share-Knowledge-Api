@@ -4,6 +4,7 @@ import {
   getAllCoursesService,
   getCourseByIdService,
   updateCourseService,
+  getCoursesByCategoryService
 } from "../models/courseModel.js";
 
 // Standardized response function
@@ -31,6 +32,28 @@ export const getAllCourses = async (req, res, next) => {
     handleResponse(res, 200, "Courses fetched successfully", courses);
   } catch (err) {
     next(err);
+  }
+};
+
+export const getCoursesByCategory = async (req, res, next) => {
+  const { category } = req.params;
+
+  if (!category) {
+    return res.status(400).json({
+      status: 400,
+      message: "Category is required",
+    });
+  }
+
+  try {
+    const courses = await getCoursesByCategoryService(category);
+    res.status(200).json({
+      status: 200,
+      message: "Courses fetched successfully",
+      data: courses,
+    });
+  } catch (error) {
+    next(error);
   }
 };
 

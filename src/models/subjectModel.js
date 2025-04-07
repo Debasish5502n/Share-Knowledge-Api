@@ -84,8 +84,8 @@ export const getSubjectsByCourseIdService = async (course_id) => {
 export const updateSubjectService = async (id, subject_title) => {
   const query = `
     UPDATE subjects 
-    SET subject_title = $1, updated_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
-    WHERE subject_id = $2 RETURNING *;
+    SET subject_title = $2, updated_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
+    WHERE subject_id = $1 RETURNING *;
   `;
   const { rows } = await pool.query(query, [subject_title, id]);
   return rows[0];

@@ -43,15 +43,15 @@ export const getLessonsBySubjectTopicIdService = async (subjects_topic_id) => {
 export const updateLessonService = async (id, lessons_data, lessons_type) => {
   const query = `
     UPDATE lessons
-    SET lessons_data = $1,
-        lessons_type = $2,
-        created_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
-    WHERE lessons_id = $3
+    SET lessons_data = $2,
+        lessons_type = $3,
+        updated_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
+    WHERE lessons_id = $1
     RETURNING *;
   `;
-  const values = [lessons_data, lessons_type, id];
+  const values = [id, lessons_data, lessons_type];
   const { rows } = await pool.query(query, values);
-  return rows[0];
+  return rows[0] || null;
 };
 
 // 🔹 Delete lesson

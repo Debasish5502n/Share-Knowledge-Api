@@ -31,8 +31,8 @@ export const getTopicsBySubjectIdService = async (subject_id) => {
 export const updateSubjectTopicService = async (id, title) => {
   const query = `
     UPDATE subjects_topic
-    SET title = $1
-    WHERE subjects_topic_id = $2
+    SET title = $2
+    WHERE subjects_topic_id = $1
     RETURNING *;
   `;
   const { rows } = await pool.query(query, [title, id]);

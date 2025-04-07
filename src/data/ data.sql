@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS course (
     course_id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
+    course_category VARCHAR(100) NOT NULL,
     course_title VARCHAR(100) UNIQUE NOT NULL,
     course_description VARCHAR(100) NOT NULL,
     course_image VARCHAR(100) NOT NULL,
@@ -25,7 +26,7 @@ CREATE TABLE IF NOT EXISTS course (
 CREATE TABLE IF NOT EXISTS subjects (
     subject_id SERIAL PRIMARY KEY,
     course_id INT NOT NULL,
-    subject_title VARCHAR(100) UNIQUE NOT NULL,
+    subject_title VARCHAR(100) NOT NULL,
     updated_at BIGINT DEFAULT (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT,
     created_at BIGINT DEFAULT (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT,
     FOREIGN KEY (course_id) REFERENCES course(course_id) ON DELETE CASCADE
@@ -34,7 +35,7 @@ CREATE TABLE IF NOT EXISTS subjects (
 CREATE TABLE IF NOT EXISTS subjects_topic (
     subjects_topic_id SERIAL PRIMARY KEY,
     subject_id INT NOT NULL,
-    title VARCHAR(100) UNIQUE NOT NULL,
+    title VARCHAR(100) NOT NULL,
     created_at BIGINT DEFAULT (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT,
     FOREIGN KEY (subject_id) REFERENCES subjects(subject_id) ON DELETE CASCADE
 )

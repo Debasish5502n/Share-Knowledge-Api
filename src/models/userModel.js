@@ -28,10 +28,11 @@ export const getUserByIdService = async (id) => {
 // Update a user by ID
 export const updateUserService = async (id, name, email, number, password) => {
   const queryText = `
-    UPDATE users 
-    SET name = $1, email = $2, number = $3, password = $4, updated_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
-    WHERE id = $5 RETURNING *;
-  `;
+  UPDATE users 
+  SET name = $1, email = $2, number = $3, password = $4, updated_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
+  WHERE id = $5 RETURNING *;
+`;
+
   const values = [name, email, number, password, id];
   const { rows } = await pool.query(queryText, values);
   return rows[0] || null;

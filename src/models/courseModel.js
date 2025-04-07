@@ -1,10 +1,10 @@
 import pool from "../config/db.js";
 
 // Create a new course
-export const createCourseService = async (user_id, course_title, course_description, course_image, course_thumbnail) => {
+export const createCourseService = async (user_id, course_category, course_title, course_description, course_image, course_thumbnail) => {
   const queryText = `
-    INSERT INTO course (user_id, course_title, course_description, course_image, course_thumbnail)
-    VALUES ($1, $2, $3, $4, $5) RETURNING *;
+    INSERT INTO course (user_id, course_category, course_title, course_description, course_image, course_thumbnail)
+    VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;
   `;
   const values = [user_id, course_title, course_description, course_image, course_thumbnail];
   const { rows } = await pool.query(queryText, values);
@@ -25,14 +25,33 @@ export const getCourseByIdService = async (id) => {
   return rows[0] || null;
 };
 
+export const getCoursesByCategoryService = async (course_category) => {
+  const queryText = `SELECT * FROM course WHERE course_category = $1;`;
+  const { rows } = await pool.query(queryText, [course_category]);
+  return rows;
+};
+
 // Update a course by ID
-export const updateCourseService = async (id, course_title, course_description, course_image, course_thumbnail) => {
+export const updateCourseService = async (id, {
+  course_category,
+  course_title,
+  course_description,
+  course_image,
+  course_thumbnail
+}) => {
   const queryText = `
     UPDATE course 
-    SET course_title = $1, course_description = $2, course_image = $3, course_thumbnail = $4, updated_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
-    WHERE course_id = $5 RETURNING *;
+    SET 
+      course_category = $2,
+      course_title = $3,
+      course_description = $4,
+      course_image = $5,
+      course_thumbnail = $6,
+      updated_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
+    WHERE course_id = $1 
+    RETURNING *;
   `;
-  const values = [course_title, course_description, course_image, course_thumbnail, id];
+  const values = [id, course_category, course_title, course_description, course_image, course_thumbnail];
   const { rows } = await pool.query(queryText, values);
   return rows[0] || null;
 };
