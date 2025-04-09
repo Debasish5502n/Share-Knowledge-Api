@@ -55,12 +55,12 @@ import {
   
   // 🔹 Get by subject ID
   export const getTopicsBySubjectId = async (req, res, next) => {
-    const { subject_id } = req.query;
+    const { id } = req.query;
   
-    if (!subject_id) return handleResponse(res, 400, "Subject ID is required");
+    if (!id) return handleResponse(res, 400, "Subject ID is required");
   
     try {
-      const topics = await getTopicsBySubjectIdService(subject_id);
+      const topics = await getTopicsBySubjectIdService(id);
       handleResponse(res, 200, "Topics fetched", topics);
     } catch (err) {
       next(err);

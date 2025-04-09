@@ -11,7 +11,7 @@ export const createSubjectTopicService = async (subject_id, title) => {
 };
 
 export const getAllSubjectTopicsService = async () => {
-  const query = "SELECT * FROM subjects_topic;";
+  const query = "SELECT * FROM subjects_topic ORDER BY created_at ASC;";
   const { rows } = await pool.query(query);
   return rows;
 };
@@ -23,7 +23,7 @@ export const getSubjectTopicByIdService = async (id) => {
 };
 
 export const getTopicsBySubjectIdService = async (subject_id) => {
-  const query = "SELECT * FROM subjects_topic WHERE subject_id = $1;";
+  const query = "SELECT * FROM subjects_topic WHERE subject_id = $1 ORDER BY created_at ASC;";
   const { rows } = await pool.query(query, [subject_id]);
   return rows;
 };

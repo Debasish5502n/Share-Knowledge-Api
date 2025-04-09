@@ -12,7 +12,7 @@ export const createSubjectService = async (course_id, subject_title) => {
 
 // 🔹 Get all subjects
 export const getAllSubjectsService = async () => {
-  const subjectsQuery = "SELECT * FROM subjects;";
+  const subjectsQuery = "SELECT * FROM subjects ORDER BY created_at ASC;";
   const subjectsResult = await pool.query(subjectsQuery);
   const subjects = subjectsResult.rows;
 
@@ -22,7 +22,8 @@ export const getAllSubjectsService = async () => {
     const topicQuery = `
       SELECT subjects_topic_id, title 
       FROM subjects_topic 
-      WHERE subject_id = $1;
+      WHERE subject_id = $1
+      ORDER BY created_at ASC;;
     `;
     const topicResult = await pool.query(topicQuery, [subject.subject_id]);
 
@@ -47,7 +48,8 @@ export const getSubjectByIdService = async (id) => {
   const topicsQuery = `
     SELECT subjects_topic_id, title 
     FROM subjects_topic 
-    WHERE subject_id = $1;
+    WHERE subject_id = $1
+    ORDER BY created_at ASC;;
   `;
   const topicsResult = await pool.query(topicsQuery, [id]);
 
@@ -59,7 +61,13 @@ export const getSubjectByIdService = async (id) => {
 
 // 🔹 Get all subjects under a course
 export const getSubjectsByCourseIdService = async (course_id) => {
-  const query = "SELECT * FROM subjects WHERE course_id = $1;";
+  // Sort subjects by created_at in DESCENDING order
+  const query = `
+    SELECT * 
+    FROM subjects 
+    WHERE course_id = $1 
+    ORDER BY created_at ASC;
+  `;
   const { rows } = await pool.query(query, [course_id]);
 
   const result = [];
@@ -69,6 +77,7 @@ export const getSubjectsByCourseIdService = async (course_id) => {
       SELECT subjects_topic_id, title 
       FROM subjects_topic 
       WHERE subject_id = $1;
+      ORDER BY created_at ASC;
     `;
     const topicsResult = await pool.query(topicsQuery, [subject.subject_id]);
 
