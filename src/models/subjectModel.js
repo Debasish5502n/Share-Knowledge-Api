@@ -76,7 +76,7 @@ export const getSubjectsByCourseIdService = async (course_id) => {
     const topicsQuery = `
       SELECT subjects_topic_id, title 
       FROM subjects_topic 
-      WHERE subject_id = $1;
+      WHERE subject_id = $1
       ORDER BY created_at ASC;
     `;
     const topicsResult = await pool.query(topicsQuery, [subject.subject_id]);
