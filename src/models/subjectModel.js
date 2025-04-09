@@ -87,7 +87,7 @@ export const updateSubjectService = async (id, subject_title) => {
     SET subject_title = $2, updated_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
     WHERE subject_id = $1 RETURNING *;
   `;
-  const { rows } = await pool.query(query, [subject_title, id]);
+  const { rows } = await pool.query(query, [id, subject_title]);
   return rows[0];
 };
 

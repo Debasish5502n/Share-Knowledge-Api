@@ -35,7 +35,7 @@ export const updateSubjectTopicService = async (id, title) => {
     WHERE subjects_topic_id = $1
     RETURNING *;
   `;
-  const { rows } = await pool.query(query, [title, id]);
+  const { rows } = await pool.query(query, [id, title]);
   return rows[0];
 };
 
