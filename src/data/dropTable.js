@@ -2,7 +2,7 @@ import pool from "../config/db.js";
 
 const dropTable = async () => {
   const queryText = `
-    DROP TABLE IF EXISTS Hii CASCADE;
+    DROP TABLE IF EXISTS course CASCADE;
   `;
 
   try {

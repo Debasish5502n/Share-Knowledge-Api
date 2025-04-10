@@ -17,9 +17,9 @@ const handleResponse = (res, status, message, data = null) => {
 };
 
 export const createCourse = async (req, res, next) => {
-  const { user_id, course_category, course_title, course_description, course_image, course_thumbnail } = req.body;
+  const { user_id, course_category, course_language, course_title, course_description, course_image, course_thumbnail } = req.body;
   try {
-    const newCourse = await createCourseService(user_id, course_category, course_title, course_description, course_image, course_thumbnail);
+    const newCourse = await createCourseService(user_id, course_category, course_language, course_title, course_description, course_image, course_thumbnail);
     handleResponse(res, 201, "Course created successfully", newCourse);
   } catch (err) {
     next(err);
@@ -78,7 +78,7 @@ export const getCourseById = async (req, res, next) => {
 
 export const updateCourse = async (req, res, next) => {
   const { id } = req.query;
-  const { course_title, course_description, course_image, course_thumbnail } = req.body; // ✅ Get updated values from request body
+  const { course_category, course_language, course_title, course_description, course_image, course_thumbnail } = req.body; // ✅ Get updated values from request body
 
   if (!id) {
     return handleResponse(res, 400, "Course ID is required");
@@ -91,6 +91,8 @@ export const updateCourse = async (req, res, next) => {
   try {
     const updatedCourse = await updateCourseService(id, {
       course_title,
+      course_language,
+      course_category,
       course_description,
       course_image,
       course_thumbnail

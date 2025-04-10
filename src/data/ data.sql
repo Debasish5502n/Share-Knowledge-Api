@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS course (
     course_id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     course_category VARCHAR(100) NOT NULL,
+    course_language VARCHAR(100) NOT NULL,
     course_title VARCHAR(100) UNIQUE NOT NULL,
     course_description VARCHAR(100) NOT NULL,
     course_image VARCHAR(100) NOT NULL,
