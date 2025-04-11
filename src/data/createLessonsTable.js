@@ -6,7 +6,7 @@ const createLessonsTable = async () => {
     lessons_id SERIAL PRIMARY KEY,
     subject_id INT NOT NULL,
     subjects_topic_id INT NOT NULL,
-    lessons_data VARCHAR(100) UNIQUE NOT NULL,
+    lessons_data VARCHAR(10000) NOT NULL,
     lessons_type VARCHAR(100) NOT NULL,
     created_at BIGINT DEFAULT (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT,
     FOREIGN KEY (subject_id) REFERENCES subjects(subject_id) ON DELETE CASCADE,

@@ -44,8 +44,7 @@ export const updateLessonService = async (id, lessons_data, lessons_type) => {
   const query = `
     UPDATE lessons
     SET lessons_data = $2,
-        lessons_type = $3,
-        updated_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
+        lessons_type = $3
     WHERE lessons_id = $1
     RETURNING *;
   `;

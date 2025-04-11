@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import pool from "./src/config/db.js";
+import fileUpload from "express-fileupload";
 
 import userRoutes from "./src/routs/userRoutes.js";
 import courseRoutes from "./src/routs/courseRoutes.js";
@@ -25,6 +26,8 @@ const port = process.env.PORT || 3001;
 
 // Middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload());
 app.use(cors());
 
 // Routes
