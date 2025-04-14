@@ -14,7 +14,7 @@ export const createLessonService = async (subject_id, subjects_topic_id, lessons
 
 // 🔹 Get all lessons
 export const getAllLessonsService = async () => {
-  const query = `SELECT * FROM lessons;`;
+  const query = `SELECT * FROM lessons ORDER BY created_at ASC;`;
   const { rows } = await pool.query(query);
   return rows;
 };
@@ -28,13 +28,13 @@ export const getLessonByIdService = async (id) => {
 
 // 🔹 Get lessons by subject_id
 export const getLessonsBySubjectIdService = async (subject_id) => {
-  const query = `SELECT * FROM lessons WHERE subject_id = $1;`;
+  const query = `SELECT * FROM lessons WHERE subject_id = $1 ORDER BY created_at ASC;`;
   const { rows } = await pool.query(query, [subject_id]);
   return rows;
 };
 
 export const getLessonsBySubjectTopicIdService = async (subjects_topic_id) => {
-  const query = `SELECT * FROM lessons WHERE subjects_topic_id = $1;`;
+  const query = `SELECT * FROM lessons WHERE subjects_topic_id = $1 ORDER BY created_at ASC;`;
   const { rows } = await pool.query(query, [subjects_topic_id]);
   return rows;
 };
