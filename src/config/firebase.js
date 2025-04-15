@@ -1,15 +1,18 @@
 import { initializeApp, cert } from "firebase-admin/app";
 import { getStorage } from "firebase-admin/storage";
 
-// Parse service account JSON from the environment variable
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+// Decode base64 string from env
+const serviceAccount = JSON.parse(
+  Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT_BASE64, 'base64').toString('utf-8')
+);
 
-// Initialize Firebase
+// Initialize Firebase App
 initializeApp({
   credential: cert(serviceAccount),
-  storageBucket: "book-app-3eb7b.appspot.com",
+  storageBucket: 'book-app-3eb7b.appspot.com', // Replace with your actual bucket name
 });
 
-// Export bucket for use in your code
+// Access Firebase Storage bucket
 const bucket = getStorage().bucket();
+
 export { bucket };
