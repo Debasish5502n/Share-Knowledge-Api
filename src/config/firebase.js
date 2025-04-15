@@ -10,7 +10,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Load service account JSON
-const serviceAccountPath = path.join(__dirname, "service-account.json");
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+const serviceAccountPath = path.join(__dirname, serviceAccount);
 const serviceAccountJSON = JSON.parse(await readFile(serviceAccountPath, "utf-8"));
 
 // Initialize Firebase
