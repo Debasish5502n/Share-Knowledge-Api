@@ -1,12 +1,12 @@
 import pool from "../config/db.js";
 
 // 🔹 Create a new subject
-export const createSubjectService = async (course_id, subject_title) => {
+export const createSubjectService = async (course_id, subject_title, subject_video) => {
   const query = `
-    INSERT INTO subjects (course_id, subject_title) 
-    VALUES ($1, $2) RETURNING *;
+    INSERT INTO subjects (course_id, subject_title, subject_video) 
+    VALUES ($1, $2, $3) RETURNING *;
   `;
-  const { rows } = await pool.query(query, [course_id, subject_title]);
+  const { rows } = await pool.query(query, [course_id, subject_title, subject_video]);
   return rows[0];
 };
 
@@ -90,13 +90,13 @@ export const getSubjectsByCourseIdService = async (course_id) => {
   return result;
 };
 
-export const updateSubjectService = async (id, subject_title) => {
+export const updateSubjectService = async (id, subject_title, subject_video) => {
   const query = `
     UPDATE subjects 
-    SET subject_title = $2, updated_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
+    SET subject_title = $2, subject_video = $3, updated_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
     WHERE subject_id = $1 RETURNING *;
   `;
-  const { rows } = await pool.query(query, [id, subject_title]);
+  const { rows } = await pool.query(query, [id, subject_title, subject_video]);
   return rows[0];
 };
 

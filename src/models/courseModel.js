@@ -1,12 +1,12 @@
 import pool from "../config/db.js";
 
 // Create a new course
-export const createCourseService = async (user_id, course_category, course_language, course_title, course_description, course_image, course_thumbnail) => {
+export const createCourseService = async (user_id, course_category, course_language, course_title, course_description, course_thumbnail) => {
   const queryText = `
-    INSERT INTO course (user_id, course_category, course_language, course_title, course_description, course_image, course_thumbnail)
-    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
+    INSERT INTO course (user_id, course_category, course_language, course_title, course_description, course_thumbnail)
+    VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;
   `;
-  const values = [user_id, course_category, course_language, course_title, course_description, course_image, course_thumbnail];
+  const values = [user_id, course_category, course_language, course_title, course_description, course_thumbnail];
   const { rows } = await pool.query(queryText, values);
   return rows[0];
 };
@@ -37,7 +37,6 @@ export const updateCourseService = async (id, {
   course_language,
   course_title,
   course_description,
-  course_image,
   course_thumbnail
 }) => {
   const queryText = `
@@ -47,13 +46,12 @@ export const updateCourseService = async (id, {
       course_language = $3,
       course_title = $4,
       course_description = $5,
-      course_image = $6,
-      course_thumbnail = $7,
+      course_thumbnail = $6,
       updated_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
     WHERE course_id = $1 
     RETURNING *;
   `;
-  const values = [id, course_category, course_language, course_title, course_description, course_image, course_thumbnail];
+  const values = [id, course_category, course_language, course_title, course_description, course_thumbnail];
   const { rows } = await pool.query(queryText, values);
   return rows[0] || null;
 };

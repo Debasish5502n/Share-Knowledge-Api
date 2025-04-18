@@ -9,7 +9,6 @@ const createCourseTable = async () => {
       course_language VARCHAR(100) NOT NULL,
       course_title VARCHAR(100) UNIQUE NOT NULL,
       course_description VARCHAR(255) NOT NULL,
-      course_image VARCHAR(255) NOT NULL,
       course_thumbnail VARCHAR(255) NOT NULL,
       updated_at BIGINT DEFAULT (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT,
       created_at BIGINT DEFAULT (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT,
