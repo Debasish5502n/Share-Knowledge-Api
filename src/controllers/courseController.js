@@ -200,6 +200,8 @@ export const updateCourse = async (req, res, next) => {
 
       await fileUpload.makePublic();
       course_thumbnail = `https://storage.googleapis.com/${bucket.name}/${filename}`;
+    }else{
+      course_thumbnail = ""
     }
 
     const updatedCourse = await updateCourseService(id, {

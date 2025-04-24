@@ -39,19 +39,40 @@ export const updateCourseService = async (id, {
   course_description,
   course_thumbnail
 }) => {
-  const queryText = `
-    UPDATE course 
-    SET 
-      course_category = $2,
-      course_language = $3,
-      course_title = $4,
-      course_description = $5,
-      course_thumbnail = $6,
-      updated_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
-    WHERE course_id = $1 
-    RETURNING *;
-  `;
-  const values = [id, course_category, course_language, course_title, course_description, course_thumbnail];
+  let queryText;
+  let values;
+
+  if (course_thumbnail == "") {
+    // Don't update thumbnail
+    queryText = `
+      UPDATE course 
+      SET 
+        course_category = $2,
+        course_language = $3,
+        course_title = $4,
+        course_description = $5,
+        updated_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
+      WHERE course_id = $1 
+      RETURNING *;
+    `;
+    values = [id, course_category, course_language, course_title, course_description];
+  } else {
+    // Update everything including thumbnail
+    queryText = `
+      UPDATE course 
+      SET 
+        course_category = $2,
+        course_language = $3,
+        course_title = $4,
+        course_description = $5,
+        course_thumbnail = $6,
+        updated_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
+      WHERE course_id = $1 
+      RETURNING *;
+    `;
+    values = [id, course_category, course_language, course_title, course_description, course_thumbnail];
+  }
+
   const { rows } = await pool.query(queryText, values);
   return rows[0] || null;
 };
