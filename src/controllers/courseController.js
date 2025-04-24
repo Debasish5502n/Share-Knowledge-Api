@@ -204,8 +204,7 @@ export const updateCourse = async (req, res, next) => {
       typeof req.body.course_thumbnail === "string" &&  // Check if it's a string
       req.body.course_thumbnail.trim() !== ""          // Ensure it's not empty or blank
     ) {
-      // Handle string input (URL or existing text value)
-      course_thumbnail = "";
+      course_thumbnail = req.body.course_thumbnail.trim();
     }
 
     const updatedCourse = await updateCourseService(id, {
