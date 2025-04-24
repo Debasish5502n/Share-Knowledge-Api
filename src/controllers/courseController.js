@@ -200,8 +200,12 @@ export const updateCourse = async (req, res, next) => {
 
       await fileUpload.makePublic();
       course_thumbnail = `https://storage.googleapis.com/${bucket.name}/${filename}`;
-    }else if (typeof req.body.course_thumbnail === "string" && req.body.course_thumbnail.trim() !== "") {
-      course_thumbnail = ""
+    }else if (
+      typeof req.body.course_thumbnail === "string" &&  // Check if it's a string
+      req.body.course_thumbnail.trim() !== ""          // Ensure it's not empty or blank
+    ) {
+      // Handle string input (URL or existing text value)
+      course_thumbnail = "";
     }
 
     const updatedCourse = await updateCourseService(id, {
