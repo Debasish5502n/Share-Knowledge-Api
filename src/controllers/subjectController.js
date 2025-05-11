@@ -15,7 +15,7 @@ import {
     const { course_id, subject_title, subject_video } = req.body;
   
     if (!course_id || !subject_title) {
-      return handleResponse(res, 400, "Course ID and Subject Title are required");
+      return handleResponse(res, 400, "Course ID, subject_video and Subject Title are required");
     }
   
     try {
